@@ -16,6 +16,7 @@ class Liste {
         Liste& suivant() const;
         void insererDebut(int);
         void supprimerDebut();
+        int nbElements(const Liste&) const;
         string toString() const;
 };
 

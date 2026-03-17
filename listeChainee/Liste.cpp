@@ -4,12 +4,6 @@
 // CONSTRUCTEURS
 Liste::Liste() : m_valeur(0), m_suivant(nullptr) {}
 
-Liste::Liste(const Liste& autre) : m_valeur(autre.m_valeur), m_suivant(nullptr) {
-    if (autre.m_suivant != nullptr) {
-        this->m_suivant = new Liste(*autre.m_suivant);
-    }
-}
-
 // DESTRUCTEURS
 Liste::~Liste() {}
 
@@ -42,15 +36,25 @@ void Liste::supprimerDebut() {
     }
 }
 
+int Liste::nbElements(const Liste& l) const {
+    int compteur = 0;
+    const Liste* courant = l.m_suivant;
+    while (courant != nullptr) {
+        compteur++;
+        courant = courant->m_suivant;
+    }
+    return compteur;
+}
+
 string Liste::toString() const {
     string chaine;
     const Liste* courant = this->m_suivant;
     while (courant != nullptr) {
-        chaine += "| ";
+        chaine += "[";
         chaine += to_string(courant->m_valeur);
-        chaine += " / - | -> ";
+        chaine += "] -> ";
         courant = courant->m_suivant;
     }
-    chaine += "|   / x | \n";
+    chaine += "x\n";
     return chaine;
 }
