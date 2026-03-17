@@ -46,6 +46,13 @@ int Liste::nbElements(const Liste& l) const {
     return compteur;
 }
 
+int Liste::nbElementsRec(const Liste& l) const {
+    if (l.m_suivant == nullptr) {
+        return 0;
+    }
+    return 1 + nbElementsRec(*l.m_suivant);
+}
+
 string Liste::toString() const {
     string chaine;
     const Liste* courant = this->m_suivant;
