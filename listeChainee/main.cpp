@@ -10,11 +10,11 @@ int main(void)
     liste1.insererDebut(2);
     liste1.insererDebut(5);
 
-    cout << liste1.toString() << endl << to_string(liste1.nbElements(liste1)) << endl << to_string(liste1.nbElementsRec(liste1)) << endl << endl;
+    cout << liste1.toString() << endl << to_string(liste1.nbElements(liste1)) << endl << to_string(liste1.nbElementsRec(liste1)) << endl << liste1.appartient(5) << endl << endl;
 
     liste1.supprimerDebut();
 
-    cout << liste1.toString() << endl << to_string(liste1.nbElements(liste1)) << endl << to_string(liste1.nbElementsRec(liste1)) << endl << endl;
+    cout << liste1.toString() << endl << to_string(liste1.nbElements(liste1)) << endl << to_string(liste1.nbElementsRec(liste1)) << endl << liste1.appartient(5) << endl << endl;
 
     while(true){}
     

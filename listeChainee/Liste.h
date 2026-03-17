@@ -18,6 +18,7 @@ class Liste {
         void supprimerDebut();
         int nbElements(const Liste&) const;
         int nbElementsRec(const Liste&) const;
+        bool appartient(int) const;
         string toString() const;
 };
 

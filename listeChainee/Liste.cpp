@@ -53,6 +53,17 @@ int Liste::nbElementsRec(const Liste& l) const {
     return 1 + nbElementsRec(*l.m_suivant);
 }
 
+bool Liste::appartient(int valeur) const {
+    const Liste* courant = this->m_suivant;
+    while (courant != nullptr) {
+        if (courant->m_valeur == valeur) {
+            return true;
+        }
+        courant = courant->m_suivant;
+    }
+    return false;
+}
+
 string Liste::toString() const {
     string chaine;
     const Liste* courant = this->m_suivant;
