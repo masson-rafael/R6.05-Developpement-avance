@@ -11,6 +11,7 @@ class Liste {
         Liste();
         Liste(const Liste&);
         ~Liste();
+        Liste& operator=(const Liste&);
         bool estVide() const;
         int getValeur() const;
         Liste& suivant() const;
