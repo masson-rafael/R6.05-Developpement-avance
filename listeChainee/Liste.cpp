@@ -36,23 +36,6 @@ void Liste::supprimerDebut() {
     }
 }
 
-int Liste::nbElements(const Liste& l) const {
-    int compteur = 0;
-    const Liste* courant = l.m_suivant;
-    while (courant != nullptr) {
-        compteur++;
-        courant = courant->m_suivant;
-    }
-    return compteur;
-}
-
-int Liste::nbElementsRec(const Liste& l) const {
-    if (l.m_suivant == nullptr) {
-        return 0;
-    }
-    return 1 + nbElementsRec(*l.m_suivant);
-}
-
 bool Liste::appartient(int valeur) const {
     const Liste* courant = this->m_suivant;
     while (courant != nullptr) {
