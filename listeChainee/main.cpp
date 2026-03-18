@@ -2,6 +2,7 @@
 using namespace std;
 #include "Liste.h"
 #include "Pile.h"
+#include "File.h"
 
 int nbElements(const Liste&);
 int nbElementsRec(const Liste&);
@@ -30,6 +31,19 @@ int main(void)
     pile1.depiler();
     cout << "Pile apres un depiler() : \n" << pile1.toString();
     cout << "Nouveau sommet : " << pile1.sommet() << endl;
+
+    cout << "--- TESTS FILE ---" << endl;
+    File file1;
+    cout << "File vide ? " << (file1.estVide() ? "Oui" : "Non") << endl;
+    file1.enfiler(10);
+    file1.enfiler(20);
+    file1.enfiler(30);
+    cout << "File apres enfiler(10, 20, 30) : \n" << file1.toString();
+    cout << "Premier de la file : " << file1.premier() << endl;
+
+    file1.defiler();
+    cout << "File apres un defiler() : \n" << file1.toString();
+    cout << "Premier tete : " << file1.premier() << endl;
 
     while(true){}
 }
