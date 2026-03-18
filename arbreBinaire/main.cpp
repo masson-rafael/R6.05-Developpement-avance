@@ -26,5 +26,7 @@ int main(void)
     cout << "Fils gauche du fils gauche : " << abr.fG().fG().racine() << endl;
     cout << "Fils droit du fils gauche  : " << abr.fG().fD().racine() << endl;
 
+    cout << "Hauteur de l'arbre : " << abr.hauteur() << endl;
+
     return 0;
 }

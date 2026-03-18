@@ -20,6 +20,7 @@ public:
     Element racine() const;
     void setRacine(Element);
     void detruire();
+    int hauteur() const;
 };
 
 /* ================================================================== */
@@ -79,6 +80,13 @@ void ArbreBin<Element>::detruire()
         delete this->m_fD;
         this->m_fD = nullptr;
     }
+}
+
+template <class Element>
+int ArbreBin<Element>::hauteur() const
+{
+    if (this->estVide()) {return 0;}
+    return 1 + std::max(this->fG().hauteur(), this->fD().hauteur());
 }
 
 #endif
