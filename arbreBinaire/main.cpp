@@ -2,12 +2,13 @@
 using namespace std;
 #include "ArbreBin.h"
 #include <queue>
+#include <cmath>
 
 ArbreBin<int> buildTree();
 ArbreBin<int> buildDegenerateTree();
 ArbreBin<int> buildLocalCompletTree();
 ArbreBin<int> buildPartielOrdTree();
-ArbreBin<int> buildCompletNonParfaitTree();
+ArbreBin<int> buildCompletTree();
 ArbreBin<int> buildParfaitTree();
 ArbreBin<int> buildTasTree();
 
@@ -37,8 +38,8 @@ bool estLocalComplet(ArbreBin<int>& abr);
 supérieure à celles des noeuds de son sous arbre */
 bool estPartielOrd(ArbreBin<int>& abr);
 
-/* Tout nœud possède une étiquette
-supérieure à celles des noeuds de son sous arbre*/
+/* Localement complet et toutes les feuilles
+sont à la même profondeur */
 bool estComplet(ArbreBin<int>& abr);
 
 /* tous les niveaux sont remplis sauf
@@ -86,8 +87,8 @@ int main(void)
     ArbreBin<int> abrDeg = buildDegenerateTree();
     ArbreBin<int> abrLoc = buildLocalCompletTree();
     ArbreBin<int> abrPOrd = buildPartielOrdTree();
-    ArbreBin<int> abrComp = buildParfaitTree();
-    ArbreBin<int> abrParf = buildCompletNonParfaitTree();
+    ArbreBin<int> abrComp = buildCompletTree();
+    ArbreBin<int> abrParf = buildParfaitTree();
     ArbreBin<int> abrTas = buildTasTree();
 
     cout << "1. Degenere (chaine)" << endl;
@@ -184,19 +185,7 @@ ArbreBin<int> buildPartielOrdTree()
     return arbre;
 }
 
-ArbreBin<int> buildCompletNonParfaitTree()
-{
-    ArbreBin<int> arbre;
-    arbre.setRacine(8);
-    arbre.fG().setRacine(4);
-    arbre.fD().setRacine(12);
-    arbre.fG().fG().setRacine(2);
-    arbre.fG().fD().setRacine(6);
-    arbre.fD().fG().setRacine(10);
-    return arbre;
-}
-
-ArbreBin<int> buildParfaitTree()
+ArbreBin<int> buildCompletTree()
 {
     ArbreBin<int> arbre;
     arbre.setRacine(7);
@@ -206,6 +195,18 @@ ArbreBin<int> buildParfaitTree()
     arbre.fG().fD().setRacine(5);
     arbre.fD().fG().setRacine(9);
     arbre.fD().fD().setRacine(13);
+    return arbre;
+}
+
+ArbreBin<int> buildParfaitTree()
+{
+    ArbreBin<int> arbre;
+    arbre.setRacine(8);
+    arbre.fG().setRacine(4);
+    arbre.fD().setRacine(12);
+    arbre.fG().fG().setRacine(2);
+    arbre.fG().fD().setRacine(6);
+    arbre.fD().fG().setRacine(10);
     return arbre;
 }
 
@@ -280,9 +281,12 @@ bool estPartielOrd(ArbreBin<int>& abr) {
     return estPartielOrd(abr.fG()) && estPartielOrd(abr.fD());
 }
 
+int nbNoeud(ArbreBin<int>& abr){
+    if (abr.estVide()) return 0;
+    return 1 + nbNoeud(abr.fG()) + nbNoeud(abr.fD());
+}
 bool estComplet(ArbreBin<int>& abr) {
-    (void)abr; // TODO: a completer
-    return false;
+    return nbNoeud(abr) == (pow(2,abr.hauteur())-1);
 }
 
 bool estParfait(ArbreBin<int>& abr) {
