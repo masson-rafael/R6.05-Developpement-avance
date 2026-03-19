@@ -17,6 +17,8 @@ public:
     ArbreBin<Element> &fG() const;
     ArbreBin<Element> &fD() const;
     bool estVide() const;
+    bool estFeuille() const;
+    bool estDegreDeux() const;
     Element racine() const;
     void setRacine(Element);
     void detruire();
@@ -49,6 +51,16 @@ template <class Element>
 bool ArbreBin<Element>::estVide() const
 {
     return this->m_fG == nullptr; // verifie que le fils gauche car un arbre vide est (null,nullptr,nullptr)
+}
+
+template <class Element>
+bool ArbreBin<Element>::estFeuille() const {
+    return this->m_fG->estVide() && this->m_fD->estVide();
+}
+
+template <class Element>
+bool ArbreBin<Element>::estDegreDeux() const {
+    return !this->m_fG->estVide() && !this->m_fD->estVide();
 }
 
 template <class Element>

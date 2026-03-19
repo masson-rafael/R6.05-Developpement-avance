@@ -223,21 +223,21 @@ ArbreBin<int> buildTasTree()
 }
 
 void parcoursPre(ArbreBin<int>& abr) {
-    if(abr.estVide()) { return; }
+    if(abr.estVide()) return;
     cout << abr.racine() << " ";
     parcoursPre(abr.fG());
     parcoursPre(abr.fD());
 }
 
 void parcoursInf(ArbreBin<int>& abr) {
-    if(abr.estVide()) { return; }
+    if(abr.estVide()) return;
     parcoursInf(abr.fG());
     cout << abr.racine() << " ";
     parcoursInf(abr.fD());
 }
 
 void parcoursPost(ArbreBin<int>& abr) {
-    if(abr.estVide()) { return; }
+    if(abr.estVide()) return;
     parcoursPost(abr.fG());
     parcoursPost(abr.fD());
     cout << abr.racine() << " ";
@@ -245,7 +245,7 @@ void parcoursPost(ArbreBin<int>& abr) {
 
 void parcoursLarg(ArbreBin<int>& abr) {
     std::queue<ArbreBin<int>*> file;
-    if(!abr.estVide()){ file.push(&abr); }
+    if(!abr.estVide()) file.push(&abr);
     while(!file.empty()){
         ArbreBin<int>* tete = file.front();
         cout << tete->racine() << " ";
@@ -260,15 +260,16 @@ void parcoursLarg(ArbreBin<int>& abr) {
 }
 
 bool estDegenere(ArbreBin<int>& abr) {
-    if(abr.estVide()){return true;}
-    if(!abr.fG().estVide() && !abr.fD().estVide()) {return false;}
+    if(abr.estVide()) return true;
+    if(abr.estDegreDeux()) return false;
     
     return estDegenere(abr.fG()) && estDegenere(abr.fD());
 }
 
 bool estLocalComplet(ArbreBin<int>& abr) {
-    (void)abr; // TODO: a completer
-    return false;
+    if(abr.estVide() || abr.estFeuille()) return true;
+
+    return abr.estDegreDeux() && estLocalComplet(abr.fG()) && estLocalComplet(abr.fD());
 }
 
 bool estPartielOrd(ArbreBin<int>& abr) {
