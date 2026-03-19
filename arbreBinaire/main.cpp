@@ -260,8 +260,10 @@ void parcoursLarg(ArbreBin<int>& abr) {
 }
 
 bool estDegenere(ArbreBin<int>& abr) {
-    (void)abr; // TODO: a completer
-    return false;
+    if(abr.estVide()){return true;}
+    if(!abr.fG().estVide() && !abr.fD().estVide()) {return false;}
+    
+    return estDegenere(abr.fG()) && estDegenere(abr.fD());
 }
 
 bool estLocalComplet(ArbreBin<int>& abr) {
