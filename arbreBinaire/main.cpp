@@ -273,8 +273,11 @@ bool estLocalComplet(ArbreBin<int>& abr) {
 }
 
 bool estPartielOrd(ArbreBin<int>& abr) {
-    (void)abr; // TODO: a completer
-    return false;
+    if (abr.estVide()) return true;
+    if (!abr.fG().estVide() && abr.racine() < abr.fG().racine()) return false;
+    if (!abr.fD().estVide() && abr.racine() < abr.fD().racine()) return false;
+    
+    return estPartielOrd(abr.fG()) && estPartielOrd(abr.fD());
 }
 
 bool estComplet(ArbreBin<int>& abr) {
