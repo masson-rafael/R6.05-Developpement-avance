@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 #include "ArbreBin.h"
+#include <queue>
 
 ArbreBin<int> buildTree();
 
@@ -18,7 +19,7 @@ void parcoursPost(ArbreBin<int>& abr);
 
 /* on parcourt tous les sommets de
 profondeur p avant ceux de profondeur p+1 */
-void parcoursLargeur(ArbreBin<int>& abr);
+void parcoursLarg(ArbreBin<int>& abr);
 
 int main(void)
 {
@@ -48,7 +49,7 @@ int main(void)
     
     cout << "\nParcours Largeur attendu :  6 4 8 3 2 7 5 9 1 \n";
     cout << "Parcours Largeur test :     ";
-    parcoursLargeur(abr);
+    parcoursLarg(abr);
     cout << endl;
 
     return 0;
@@ -95,6 +96,18 @@ void parcoursPost(ArbreBin<int>& abr) {
     cout << abr.racine() << " ";
 }
 
-void parcoursLargeur(ArbreBin<int>& abr) {
-    cout << "test";
+void parcoursLarg(ArbreBin<int>& abr) {
+    std::queue<ArbreBin<int>*> file;
+    if(!abr.estVide()){ file.push(&abr); }
+    while(!file.empty()){
+        ArbreBin<int>* tete = file.front();
+        cout << tete->racine() << " ";
+        file.pop();
+        if(!tete->fG().estVide()){
+            file.push(&tete->fG());
+        }
+        if(!tete->fD().estVide()){
+            file.push(&tete->fD());
+        }
+    }
 }
