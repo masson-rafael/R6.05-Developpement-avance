@@ -307,12 +307,44 @@ bool estComplet(ArbreBin<int>& abr) {
 }
 
 
-int estParfaitRec(ArbreBin<int>& abr) {
+bool estParfaitRec(ArbreBin<int>& abr, int& h, bool& estComplet) {
+    if (abr.estVide()) {
+        h = 0;
+        estComplet = true;
+        return true; // Un arbre vide est parfait (et complet)
+    }
+
+    int hG, hD;
+    bool estCompletG, estCompletD;
+
+    bool estParfaitG = estParfaitRec(abr.fG(), hG, estCompletG);
+    bool estParfaitD = estParfaitRec(abr.fD(), hD, estCompletD);
+
+    h = 1 + std::max(hG, hD);
+
+    if (estParfaitG && estParfaitD) {
+        // Cas 1 : Le sa gauche est complet et les sous-arbres ont la même hauteur.
+        // Alors le dernier niveau continue de se remplir à droite.
+        if (estCompletG && hG == hD) {
+            estComplet = estCompletD; // Totalement complet si la droite l'est aussi
+            return true;
+        }
+        // Cas 2 : Le sa droit est complet, mais le sa gauche a 1 niveau de plus.
+        // Alors le dernier niveau est partiellement rempli à gauche.
+        if (estCompletD && hG == hD + 1) {
+            estComplet = false; // Hauteurs différentes => parfait mais plus complet
+            return true;
+        }
+    }
+
+    estComplet = false;
     return false;
 }
 
 bool estParfait(ArbreBin<int>& abr) {
-    return estParfaitRec(abr);
+    int h;
+    bool complet;
+    return estParfaitRec(abr, h, complet);
 }
 
 
