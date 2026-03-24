@@ -347,7 +347,48 @@ bool estParfait(ArbreBin<int>& abr) {
     return estParfaitRec(abr, h, complet);
 }
 
+bool estTasRec(ArbreBin<int>& abr, int& h, bool& estComplet) {
+    if (abr.estVide()) {
+        h = 0;
+        estComplet = true;
+        return true;
+    }
+
+    int hG, hD;
+    bool estCompletG, estCompletD;
+
+    // On vérifie d'abord si les sous-arbres sont eux-mêmes des tas
+    bool estTasG = estTasRec(abr.fG(), hG, estCompletG);
+    bool estTasD = estTasRec(abr.fD(), hD, estCompletD);
+
+    h = 1 + std::max(hG, hD);
+
+    // Si les DEUX sous-arbres sont des tas, il faut vérifier ce noeud courant
+    if (estTasG && estTasD) {
+        
+        bool ordreOK = true;
+        if (!abr.fG().estVide() && abr.racine() < abr.fG().racine()) ordreOK = false;
+        if (!abr.fD().estVide() && abr.racine() < abr.fD().racine()) ordreOK = false;
+
+        if (ordreOK) {
+            // Même logique de forme que pour estParfait
+            if (estCompletG && hG == hD) {
+                estComplet = estCompletD;
+                return true;
+            }
+            if (estCompletD && hG == hD + 1) {
+                estComplet = false;
+                return true;
+            }
+        }
+    }
+
+    estComplet = false;
+    return false;
+}
 
 bool estTas(ArbreBin<int>& abr) {
-    return estParfait(abr) && estPartielOrd(abr);
+    int h;
+    bool complet;
+    return estTasRec(abr, h, complet);
 }
