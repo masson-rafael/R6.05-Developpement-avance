@@ -281,20 +281,41 @@ bool estPartielOrd(ArbreBin<int>& abr) {
     return estPartielOrd(abr.fG()) && estPartielOrd(abr.fD());
 }
 
-int nbNoeud(ArbreBin<int>& abr){
-    if (abr.estVide()) return 0;
-    return 1 + nbNoeud(abr.fG()) + nbNoeud(abr.fD());
+
+int estCompletRec(ArbreBin<int>& abr, int& h) {
+    if (abr.estVide()) {
+        h = 0;
+        return true;
+    }
+    
+    int hG, hD;
+
+    bool estCompletG = estCompletRec(abr.fG(), hG);
+    bool estCompletD = estCompletRec(abr.fD(), hD);
+
+    if(estCompletG && estCompletD && hG == hD) {
+        h = hG + 1;
+        return true;
+    }
+    
+    return false;
 }
+
 bool estComplet(ArbreBin<int>& abr) {
-    return nbNoeud(abr) == (pow(2,abr.hauteur())-1);
+    int h;
+    return estCompletRec(abr, h);
+}
+
+
+int estParfaitRec(ArbreBin<int>& abr) {
+    return false;
 }
 
 bool estParfait(ArbreBin<int>& abr) {
-    (void)abr; // TODO: a completer
-    return false;
+    return estParfaitRec(abr);
 }
 
+
 bool estTas(ArbreBin<int>& abr) {
-    (void)abr; // TODO: a completer
-    return false;
+    return estParfait(abr) && estPartielOrd(abr);
 }
